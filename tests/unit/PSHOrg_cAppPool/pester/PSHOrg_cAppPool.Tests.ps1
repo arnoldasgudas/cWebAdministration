@@ -99,5 +99,12 @@ InModuleScope $ModuleName {
         test-targetresource -Name 'TestAppPool' -managedRuntimeVersion "v2.0" | should be $false
       }
     }
+    context 'there is an existing app pool and the managed runtime should be v2.0 and the verbose stream is enabled' {
+      mock -commandname 'Write-Verbose' -Verifiable -mockWith {}
+      $result = test-targetresource -Name 'TestAppPool' -managedRuntimeVersion "v2.0"  -verbose
+      it 'writes a verbose message about the mismatched setting' {
+        assert-mockcalled -commandname 'Write-Verbose' -parameterFilter {$Message -like 'managedRuntimeVersion of AppPool TestAppPool does not match the desired state.'} -exactly -times 1
+      }
+    }
   }
 }

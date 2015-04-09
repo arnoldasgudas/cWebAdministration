@@ -20,7 +20,7 @@ InModuleScope $ModuleName {
 
   }
 
-  describe 'Test-Target resource responds when' {
+  describe 'Test-Targetresource responds when' {
     mock Get-AppPool -parameterFilter {$Config -eq $true -and $Name -like 'TestAppPool'} -mockWith {
       [xml]@'
 <add>
@@ -106,5 +106,9 @@ InModuleScope $ModuleName {
         assert-mockcalled -commandname 'Write-Verbose' -parameterFilter {$Message -like 'managedRuntimeVersion of AppPool TestAppPool does not match the desired state.'} -exactly -times 1
       }
     }
+  }
+
+  describe 'Set-TargetResource responds when' {
+    
   }
 }
